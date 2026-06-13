@@ -481,6 +481,101 @@
     .compare-section { overflow-x: auto; }
   }
 
+  /* ── GENERATE SECTION ── */
+  .gen-box {
+    max-width: 860px; margin: 0 auto;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+  .gen-textarea {
+    width: 100%; min-height: 100px;
+    background: transparent; color: var(--white);
+    border: none; border-bottom: 1px solid var(--border);
+    padding: 24px 28px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; line-height: 1.6;
+    resize: none; outline: none;
+  }
+  .gen-textarea::placeholder { color: #444; }
+  .gen-tools { padding: 28px; }
+  .gen-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--dim); margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .tool-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .tool-card {
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--black);
+  }
+  .tool-card:hover { border-color: #555; background: #0d0d0d; }
+  .tool-card-top {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 14px;
+  }
+  .tool-icon { font-size: 22px; }
+  .tool-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em;
+    padding: 3px 8px; font-weight: 700;
+  }
+  .tool-badge.free { border: 1px solid #2a5; color: #2a5; }
+  .tool-badge.trial { border: 1px solid #55a; color: #88f; }
+  .tool-badge.open { border: 1px solid #555; color: var(--dim); }
+  .tool-name {
+    font-size: 16px; font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .tool-desc {
+    font-size: 12px; color: var(--dim);
+    line-height: 1.6; margin-bottom: 18px;
+  }
+  .tool-btn {
+    width: 100%; padding: 10px;
+    background: transparent; color: var(--white);
+    border: 1px solid var(--border);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .tool-card:hover .tool-btn {
+    background: var(--white); color: var(--black);
+    border-color: var(--white);
+  }
+  .gen-note {
+    padding: 14px 28px;
+    border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: #444;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 32px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--white); color: var(--black);
+    padding: 12px 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: transform 0.3s ease;
+    z-index: 999; pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 700px) {
+    .tool-cards { grid-template-columns: 1fr; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .reel-track { animation: none; }
     .reveal { transition: none; opacity: 1; transform: none; }
@@ -801,27 +896,78 @@
   </div>
 </section>
 
-<!-- CTA -->
+<!-- GENERATE SECTION -->
+<section id="generate">
 <div class="cta-section reveal">
-  <h2 class="cta-title">Ab aur wait<br><span class="dim">kyun karna?</span></h2>
-  <p class="cta-sub">India ka pehla AI video tool jo actually kaam karta hai — text se, image se, ya existing video se.</p>
-  <div class="cta-buttons">
-    <button class="btn-primary">Start for Free →</button>
-    <button class="btn-secondary">GitHub Dekho</button>
+  <h2 class="cta-title">Apna prompt<br><span class="dim">dalo, video lo.</span></h2>
+  <p class="cta-sub">Niche prompt likho, tool chuno — seedha generate karo. Bilkul free.</p>
+
+  <!-- Prompt Input -->
+  <div class="gen-box">
+    <textarea id="promptInput" class="gen-textarea" placeholder="Describe your video... e.g. A cinematic shot of Mumbai streets at night, neon lights reflecting on wet roads, slow motion..."></textarea>
+    <div class="gen-tools">
+      <p class="gen-label">Kaunse tool pe generate karna hai?</p>
+      <div class="tool-cards">
+
+        <!-- Google Flow -->
+        <div class="tool-card" onclick="redirectTool('flow')">
+          <div class="tool-card-top">
+            <span class="tool-icon">🎬</span>
+            <span class="tool-badge free">FREE CREDITS</span>
+          </div>
+          <h3 class="tool-name">Google Flow</h3>
+          <p class="tool-desc">Veo 3 powered. Best quality cinematic videos. Google ka official AI video tool.</p>
+          <button class="tool-btn">Generate on Flow →</button>
+        </div>
+
+        <!-- Kling AI -->
+        <div class="tool-card" onclick="redirectTool('kling')">
+          <div class="tool-card-top">
+            <span class="tool-icon">⚡</span>
+            <span class="tool-badge trial">FREE TRIAL</span>
+          </div>
+          <h3 class="tool-name">Kling AI</h3>
+          <p class="tool-desc">Image-to-Video aur Text-to-Video dono. Fast generation, smooth motion.</p>
+          <button class="tool-btn">Generate on Kling →</button>
+        </div>
+
+        <!-- Hugging Face -->
+        <div class="tool-card" onclick="redirectTool('hf')">
+          <div class="tool-card-top">
+            <span class="tool-icon">🤗</span>
+            <span class="tool-badge open">OPEN SOURCE</span>
+          </div>
+          <h3 class="tool-name">Hugging Face</h3>
+          <p class="tool-desc">Wan 2.1 model — 100% free, open source. Queue ho sakti hai but zero cost.</p>
+          <button class="tool-btn">Generate on HF →</button>
+        </div>
+
+      </div>
+    </div>
+    <p class="gen-note">⚡ Prompt copy hoga clipboard mein — tool pe paste karo aur generate karo.</p>
   </div>
+</div>
+</section>
+
+<!-- FOOTER CTA BAR -->
+<div style="background:var(--white);color:var(--black);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+  <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:0.06em;">CIPHERJD VIDEO AI — FREE MEIN GENERATE KARO</span>
+  <a href="#generate" style="background:var(--black);color:var(--white);padding:10px 28px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;text-decoration:none;letter-spacing:0.04em;">Try Now →</a>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo">CIPHER<span>JD</span> VIDEO AI</a>
   <ul class="footer-links">
-    <li><a href="#">YouTube</a></li>
-    <li><a href="#">GitHub</a></li>
-    <li><a href="#">PromptForge</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="https://youtube.com/@cipherjdtechgrowth" target="_blank">YouTube</a></li>
+    <li><a href="https://github.com/jagdish1992max" target="_blank">GitHub</a></li>
+    <li><a href="https://jagdish1992max.github.io/promptforge/" target="_blank">PromptForge</a></li>
   </ul>
   <span class="footer-copy">© 2025 CIPHERJD</span>
 </footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ PROMPT COPIED — PASTE KARO</div>
 
 <script>
   // Tab switching
@@ -829,6 +975,38 @@
     document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
   }
+
+  // Redirect with prompt copy
+  const toolUrls = {
+    flow: 'https://flow.google.com',
+    kling: 'https://klingai.com',
+    hf: 'https://huggingface.co/spaces/Wan-AI/Wan2.1-T2V-14B'
+  };
+
+  function redirectTool(tool) {
+    const prompt = document.getElementById('promptInput').value.trim();
+    if (prompt) {
+      navigator.clipboard.writeText(prompt).catch(() => {});
+      showToast('✓ PROMPT COPIED — PASTE KARO');
+    } else {
+      showToast('⚠ PEHLE PROMPT LIKHO!');
+    }
+    setTimeout(() => {
+      window.open(toolUrls[tool], '_blank');
+    }, 800);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // Nav CTA scroll
+  document.querySelector('.nav-cta').addEventListener('click', () => {
+    document.getElementById('generate').scrollIntoView({ behavior: 'smooth' });
+  });
 
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
@@ -844,4 +1022,3 @@
 </script>
 </body>
 </html>
-
