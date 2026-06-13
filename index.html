@@ -593,7 +593,7 @@
     <li><a href="#how">How It Works</a></li>
     <li><a href="#compare">Compare</a></li>
   </ul>
-  <button class="nav-cta">Try Free →</button>
+  <button class="nav-cta" onclick="document.getElementById('generate').scrollIntoView({behavior:'smooth'})">Try Free →</button>
 </nav>
 
 <!-- HERO -->
@@ -607,8 +607,8 @@
     CipherJD Video AI — ek prompt se cinematic video. Text-to-Video, Image-to-Video, aur long-form generation — sab ek jagah.
   </p>
   <div class="hero-actions">
-    <button class="btn-primary">Start Generating Free</button>
-    <button class="btn-secondary">Watch Demo ↓</button>
+    <button class="btn-primary" onclick="document.getElementById('generate').scrollIntoView({behavior:'smooth'})">Start Generating Free</button>
+    <button class="btn-secondary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Watch Demo ↓</button>
   </div>
   <div class="hero-stats">
     <div class="stat-item">
@@ -917,7 +917,7 @@
           </div>
           <h3 class="tool-name">Google Flow</h3>
           <p class="tool-desc">Veo 3 powered. Best quality cinematic videos. Google ka official AI video tool.</p>
-          <button class="tool-btn">Generate on Flow →</button>
+          <button class="tool-btn" onclick="event.stopPropagation(); redirectTool('flow')">Generate on Flow →</button>
         </div>
 
         <!-- Kling AI -->
@@ -928,7 +928,7 @@
           </div>
           <h3 class="tool-name">Kling AI</h3>
           <p class="tool-desc">Image-to-Video aur Text-to-Video dono. Fast generation, smooth motion.</p>
-          <button class="tool-btn">Generate on Kling →</button>
+          <button class="tool-btn" onclick="event.stopPropagation(); redirectTool('kling')">Generate on Kling →</button>
         </div>
 
         <!-- Hugging Face -->
@@ -939,7 +939,7 @@
           </div>
           <h3 class="tool-name">Hugging Face</h3>
           <p class="tool-desc">Wan 2.1 model — 100% free, open source. Queue ho sakti hai but zero cost.</p>
-          <button class="tool-btn">Generate on HF →</button>
+          <button class="tool-btn" onclick="event.stopPropagation(); redirectTool('hf')">Generate on HF →</button>
         </div>
 
       </div>
@@ -1002,11 +1002,6 @@
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2800);
   }
-
-  // Nav CTA scroll
-  document.querySelector('.nav-cta').addEventListener('click', () => {
-    document.getElementById('generate').scrollIntoView({ behavior: 'smooth' });
-  });
 
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
